@@ -642,7 +642,7 @@ class _TickerScreenState extends State<TickerScreen>
                                   style: IconButton.styleFrom(
                                     backgroundColor: Colors.red.shade50,
                                     foregroundColor: Colors.red.shade700,
-                                    minimumSize: const Size(52, 52),
+                                    minimumSize: const Size(48, 48),
                                   ),
                                   onPressed: offset > -3
                                       ? () =>
@@ -650,73 +650,82 @@ class _TickerScreenState extends State<TickerScreen>
                                       : null,
                                   icon: const Icon(
                                     Icons.remove_rounded,
-                                    size: 26,
+                                    size: 24,
                                   ),
                                 ),
-                                const SizedBox(width: 20),
-                                Container(
-                                  width: 160,
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 16,
-                                    horizontal: 12,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: offset == 0
-                                        ? AdminTheme.surfaceBg
-                                        : AdminTheme.softEmerald,
-                                    borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(
-                                      color: offset == 0
-                                          ? AdminTheme.cardBorder
-                                          : AdminTheme.primaryEmerald,
-                                      width: 1.5,
+                                const SizedBox(width: 12),
+                                Flexible(
+                                  child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 160,
+                                      minWidth: 110,
+                                    ),
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 16,
+                                        horizontal: 12,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: offset == 0
+                                            ? AdminTheme.surfaceBg
+                                            : AdminTheme.softEmerald,
+                                        borderRadius: BorderRadius.circular(16),
+                                        border: Border.all(
+                                          color: offset == 0
+                                              ? AdminTheme.cardBorder
+                                              : AdminTheme.primaryEmerald,
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            offset > 0
+                                                ? '+$offset يوم'
+                                                : (offset < 0
+                                                    ? '$offset يوم'
+                                                    : 'تلقائي (0)'),
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w900,
+                                              color: offset == 0
+                                                  ? AdminTheme.textPrimary
+                                                  : AdminTheme.primaryEmerald,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            offset == 0
+                                                ? 'التقويم الافتراضي'
+                                                : (offset > 0
+                                                    ? 'تقديم التاريخ الهجري'
+                                                    : 'تأخير التاريخ الهجري'),
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              color: AdminTheme.textSecondary,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        offset > 0
-                                            ? '+$offset يوم'
-                                            : (offset < 0
-                                                ? '$offset يوم'
-                                                : 'تلقائي (0)'),
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w900,
-                                          color: offset == 0
-                                              ? AdminTheme.textPrimary
-                                              : AdminTheme.primaryEmerald,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        offset == 0
-                                            ? 'التقويم الافتراضي'
-                                            : (offset > 0
-                                                ? 'تقديم التاريخ الهجري'
-                                                : 'تأخير التاريخ الهجري'),
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: AdminTheme.textSecondary,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                 ),
-                                const SizedBox(width: 20),
+                                const SizedBox(width: 12),
                                 IconButton.filledTonal(
                                   style: IconButton.styleFrom(
                                     backgroundColor: AdminTheme.softEmerald,
                                     foregroundColor: AdminTheme.primaryEmerald,
-                                    minimumSize: const Size(52, 52),
+                                    minimumSize: const Size(48, 48),
                                   ),
                                   onPressed: offset < 3
                                       ? () =>
                                           cubit.updateHijriOffset(offset + 1)
                                       : null,
-                                  icon: const Icon(Icons.add_rounded, size: 26),
+                                  icon: const Icon(Icons.add_rounded, size: 24),
                                 ),
                               ],
                             ),

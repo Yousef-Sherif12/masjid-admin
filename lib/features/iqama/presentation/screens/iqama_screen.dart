@@ -375,9 +375,15 @@ class IqamaScreen extends StatelessWidget {
                         }),
 
                         const SizedBox(height: 12),
-                        SizedBox(
-                          height: 54,
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(minHeight: 54),
                           child: FilledButton.icon(
+                            style: FilledButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 14,
+                              ),
+                            ),
                             icon: state.isSaving
                                 ? const SizedBox(
                                     width: 20,
@@ -388,13 +394,17 @@ class IqamaScreen extends StatelessWidget {
                                     ),
                                   )
                                 : const Icon(Icons.save_rounded),
-                            label: Text(
-                              state.isSaving
-                                  ? 'جاري الحفظ وتحديث الشاشة...'
-                                  : 'حفظ أوقات الإقامة وتطبيقها على الشاشة',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w800,
+                            label: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                state.isSaving
+                                    ? 'جاري الحفظ وتحديث الشاشة...'
+                                    : 'حفظ أوقات الإقامة وتطبيقها على الشاشة',
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                ),
                               ),
                             ),
                             onPressed:
