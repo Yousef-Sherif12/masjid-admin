@@ -35,15 +35,13 @@ dependencies:
   firebase_auth: ^5.7.0
   cloud_firestore: ^5.4.4
 
+  # State Management
+  flutter_bloc: ^9.1.0
+
   # UI
   flutter_localizations:
     sdk: flutter
   google_fonts: ^6.2.1
-
-  # Drag & Drop للترتيب
-  flutter_reorderable_list: ^1.0.0
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
