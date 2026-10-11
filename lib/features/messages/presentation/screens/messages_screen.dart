@@ -720,83 +720,94 @@ class _MessageCard extends StatelessWidget {
               const SizedBox(height: 12),
               const Divider(height: 1, color: AdminTheme.cardBorder),
               const SizedBox(height: 8),
-              Row(
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 8,
                 children: [
-                  // شارات معلومات العرض
-                  _MetaBadge(
-                    icon: Icons.timer_outlined,
-                    label: '${item.duration} ثانية',
-                  ),
-                  const SizedBox(width: 8),
-                  _MetaBadge(
-                    icon: Icons.format_size_rounded,
-                    label: item.fontSize != null
-                        ? 'خط ${item.fontSize!.toInt()}'
-                        : 'خط تلقائي',
-                  ),
-                  const Spacer(),
-                  // زر البث المباشر على الشاشة
-                  InkWell(
-                    borderRadius: BorderRadius.circular(10),
-                    onTap: onToggleLive,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _MetaBadge(
+                        icon: Icons.timer_outlined,
+                        label: '${item.duration} ث',
                       ),
-                      decoration: BoxDecoration(
-                        color: isLiveActive
-                            ? AdminTheme.primaryEmerald
-                            : AdminTheme.softEmerald,
+                      const SizedBox(width: 6),
+                      _MetaBadge(
+                        icon: Icons.format_size_rounded,
+                        label: item.fontSize != null
+                            ? 'خط ${item.fontSize!.toInt()}'
+                            : 'خط تلقائي',
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      InkWell(
                         borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            isLiveActive
-                                ? Icons.cast_connected_rounded
-                                : Icons.cast_rounded,
-                            size: 16,
+                        onTap: onToggleLive,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
                             color: isLiveActive
-                                ? Colors.white
-                                : AdminTheme.primaryEmerald,
+                                ? AdminTheme.primaryEmerald
+                                : AdminTheme.softEmerald,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          const SizedBox(width: 6),
-                          Text(
-                            isLiveActive ? 'يُعرض الآن' : 'بث مباشر',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              color: isLiveActive
-                                  ? Colors.white
-                                  : AdminTheme.primaryEmerald,
-                            ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                isLiveActive
+                                    ? Icons.cast_connected_rounded
+                                    : Icons.cast_rounded,
+                                size: 15,
+                                color: isLiveActive
+                                    ? Colors.white
+                                    : AdminTheme.primaryEmerald,
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                isLiveActive ? 'يُعرض الآن' : 'بث مباشر',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  color: isLiveActive
+                                      ? Colors.white
+                                      : AdminTheme.primaryEmerald,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  IconButton(
-                    tooltip: 'تعديل النص',
-                    visualDensity: VisualDensity.compact,
-                    icon: const Icon(
-                      Icons.edit_outlined,
-                      color: AdminTheme.textSecondary,
-                      size: 20,
-                    ),
-                    onPressed: onEdit,
-                  ),
-                  IconButton(
-                    tooltip: 'حذف النص',
-                    visualDensity: VisualDensity.compact,
-                    icon: Icon(
-                      Icons.delete_outline_rounded,
-                      color: Colors.red.shade600,
-                      size: 20,
-                    ),
-                    onPressed: onDelete,
+                      const SizedBox(width: 4),
+                      IconButton(
+                        tooltip: 'تعديل النص',
+                        visualDensity: VisualDensity.compact,
+                        icon: const Icon(
+                          Icons.edit_outlined,
+                          color: AdminTheme.textSecondary,
+                          size: 20,
+                        ),
+                        onPressed: onEdit,
+                      ),
+                      IconButton(
+                        tooltip: 'حذف النص',
+                        visualDensity: VisualDensity.compact,
+                        icon: Icon(
+                          Icons.delete_outline_rounded,
+                          color: Colors.red.shade600,
+                          size: 20,
+                        ),
+                        onPressed: onDelete,
+                      ),
+                    ],
                   ),
                 ],
               ),

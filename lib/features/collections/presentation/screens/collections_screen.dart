@@ -562,180 +562,203 @@ class CollectionsScreen extends StatelessWidget {
                                   onTap: () =>
                                       _openMessages(context, col.id, col.label),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 14,
-                                      vertical: 12,
-                                    ),
-                                    child: Row(
+                                    padding: const EdgeInsets.all(14),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
                                       children: [
-                                        ReorderableDragStartListener(
-                                          index: i,
-                                          child: Container(
-                                            padding: const EdgeInsets.all(6),
-                                            decoration: BoxDecoration(
-                                              color: AdminTheme.surfaceBg,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
+                                        // الصف الأول: مقبض السحب + الأيقونة + اسم المجموعة الكامل + زر الفتح
+                                        Row(
+                                          children: [
+                                            ReorderableDragStartListener(
+                                              index: i,
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(6),
+                                                decoration: BoxDecoration(
+                                                  color: AdminTheme.surfaceBg,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.drag_indicator_rounded,
+                                                  color:
+                                                      AdminTheme.textSecondary,
+                                                  size: 20,
+                                                ),
+                                              ),
                                             ),
-                                            child: const Icon(
-                                              Icons.drag_indicator_rounded,
-                                              color: AdminTheme.textSecondary,
-                                              size: 20,
+                                            const SizedBox(width: 10),
+                                            Container(
+                                              width: 44,
+                                              height: 44,
+                                              decoration: BoxDecoration(
+                                                color: isActive
+                                                    ? visuals.bgColor
+                                                    : Colors.grey.shade100,
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              child: Icon(
+                                                visuals.icon,
+                                                color: isActive
+                                                    ? visuals.color
+                                                    : Colors.grey,
+                                                size: 22,
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        Container(
-                                          width: 46,
-                                          height: 46,
-                                          decoration: BoxDecoration(
-                                            color: isActive
-                                                ? visuals.bgColor
-                                                : Colors.grey.shade100,
-                                            borderRadius:
-                                                BorderRadius.circular(13),
-                                          ),
-                                          child: Icon(
-                                            visuals.icon,
-                                            color: isActive
-                                                ? visuals.color
-                                                : Colors.grey,
-                                            size: 24,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 14),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
+                                            const SizedBox(width: 12),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Flexible(
-                                                    child: Text(
-                                                      col.label,
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w800,
-                                                        color: isActive
-                                                            ? AdminTheme
-                                                                .textPrimary
-                                                            : Colors.grey,
-                                                      ),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(width: 8),
-                                                  Container(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                      horizontal: 8,
-                                                      vertical: 2,
-                                                    ),
-                                                    decoration: BoxDecoration(
+                                                  Text(
+                                                    col.label,
+                                                    textDirection:
+                                                        TextDirection.rtl,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w800,
                                                       color: isActive
                                                           ? AdminTheme
-                                                              .softEmerald
-                                                          : Colors
-                                                              .grey.shade100,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                        20,
-                                                      ),
+                                                              .textPrimary
+                                                          : Colors.grey,
                                                     ),
-                                                    child: Text(
-                                                      isActive
-                                                          ? 'نشط'
-                                                          : 'متوقف',
-                                                      style: TextStyle(
-                                                        fontSize: 11,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: isActive
-                                                            ? AdminTheme
-                                                                .primaryEmerald
-                                                            : Colors.grey,
-                                                      ),
+                                                  ),
+                                                  const SizedBox(height: 2),
+                                                  Text(
+                                                    'المعرّف: ${col.id} • الترتيب #${i + 1}',
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                      color: AdminTheme
+                                                          .textSecondary,
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                              const SizedBox(height: 3),
-                                              Text(
-                                                'المعرّف: ${col.id} • الترتيب #${i + 1}',
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color:
-                                                      AdminTheme.textSecondary,
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Container(
+                                              width: 34,
+                                              height: 34,
+                                              decoration: BoxDecoration(
+                                                color: AdminTheme.softEmerald,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: const Icon(
+                                                Icons
+                                                    .arrow_forward_ios_rounded,
+                                                color:
+                                                    AdminTheme.primaryEmerald,
+                                                size: 15,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 10),
+                                        const Divider(
+                                          height: 1,
+                                          color: AdminTheme.cardBorder,
+                                        ),
+                                        const SizedBox(height: 6),
+                                        // الصف الثاني: شارة الحالة ومفتاح التفعيل وأزرار التعديل والحذف
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                                vertical: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: isActive
+                                                    ? AdminTheme.softEmerald
+                                                    : Colors.grey.shade100,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              child: Text(
+                                                isActive
+                                                    ? 'نشط على الشاشة'
+                                                    : 'متوقف حالياً',
+                                                style: TextStyle(
+                                                  fontSize: 11.5,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: isActive
+                                                      ? AdminTheme
+                                                          .primaryEmerald
+                                                      : Colors.grey,
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        IconButton(
-                                          tooltip: 'تعديل اسم المجموعة',
-                                          icon: const Icon(
-                                            Icons.edit_outlined,
-                                            color: AdminTheme.textSecondary,
-                                            size: 20,
-                                          ),
-                                          onPressed: () =>
-                                              _showEditLabelDialog(context, col),
-                                        ),
-                                        const SizedBox(width: 4),
-                                        IconButton(
-                                          tooltip: 'حذف المجموعة',
-                                          icon: Icon(
-                                            Icons.delete_outline_rounded,
-                                            color: Colors.red.shade600,
-                                            size: 20,
-                                          ),
-                                          onPressed: () =>
-                                              _confirmDeleteCollection(
-                                            context,
-                                            col,
-                                            activeCount,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Switch(
-                                          value: isActive,
-                                          onChanged: (val) async {
-                                            final success =
-                                                await cubit.toggleCollection(
-                                              col.id,
-                                              val,
-                                            );
-                                            if (!success && context.mounted) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: const Text(
-                                                    '⚠️ يجب أن تبقى مجموعة واحدة على الأقل مفعلة للعرض على الشاشة',
-                                                  ),
-                                                  backgroundColor:
-                                                      Colors.orange.shade800,
-                                                ),
-                                              );
-                                            }
-                                          },
-                                        ),
-                                        const SizedBox(width: 4),
-                                        Container(
-                                          width: 34,
-                                          height: 34,
-                                          decoration: BoxDecoration(
-                                            color: AdminTheme.softEmerald,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: const Icon(
-                                            Icons.arrow_forward_ios_rounded,
-                                            color: AdminTheme.primaryEmerald,
-                                            size: 15,
-                                          ),
+                                            ),
+                                            const Spacer(),
+                                            IconButton(
+                                              visualDensity:
+                                                  VisualDensity.compact,
+                                              tooltip: 'تعديل اسم المجموعة',
+                                              icon: const Icon(
+                                                Icons.edit_outlined,
+                                                color:
+                                                    AdminTheme.textSecondary,
+                                                size: 20,
+                                              ),
+                                              onPressed: () =>
+                                                  _showEditLabelDialog(
+                                                context,
+                                                col,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 4),
+                                            IconButton(
+                                              visualDensity:
+                                                  VisualDensity.compact,
+                                              tooltip: 'حذف المجموعة',
+                                              icon: Icon(
+                                                Icons.delete_outline_rounded,
+                                                color: Colors.red.shade600,
+                                                size: 20,
+                                              ),
+                                              onPressed: () =>
+                                                  _confirmDeleteCollection(
+                                                context,
+                                                col,
+                                                activeCount,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 6),
+                                            Switch(
+                                              value: isActive,
+                                              onChanged: (val) async {
+                                                final success = await cubit
+                                                    .toggleCollection(
+                                                  col.id,
+                                                  val,
+                                                );
+                                                if (!success &&
+                                                    context.mounted) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: const Text(
+                                                        '⚠️ يجب أن تبقى مجموعة واحدة على الأقل مفعلة للعرض على الشاشة',
+                                                      ),
+                                                      backgroundColor:
+                                                          Colors.orange.shade800,
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),

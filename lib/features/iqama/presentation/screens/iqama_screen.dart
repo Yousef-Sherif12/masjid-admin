@@ -183,7 +183,10 @@ class IqamaScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
+                                    // الصف الأول: الأيقونة + اسم الصلاة + شارة الدقائق الحالية
                                     Row(
                                       children: [
                                         Container(
@@ -200,7 +203,7 @@ class IqamaScreen extends StatelessWidget {
                                             size: 24,
                                           ),
                                         ),
-                                        const SizedBox(width: 14),
+                                        const SizedBox(width: 12),
                                         Expanded(
                                           child: Column(
                                             crossAxisAlignment:
@@ -208,6 +211,8 @@ class IqamaScreen extends StatelessWidget {
                                             children: [
                                               Text(
                                                 'صلاة ${prayer.name}',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
                                                 style: const TextStyle(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w800,
@@ -216,6 +221,8 @@ class IqamaScreen extends StatelessWidget {
                                               ),
                                               Text(
                                                 prayer.subtitle,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
                                                 style: const TextStyle(
                                                   fontSize: 12,
                                                   color:
@@ -225,49 +232,7 @@ class IqamaScreen extends StatelessWidget {
                                             ],
                                           ),
                                         ),
-                                        // أزرار الاختيار السريع (Presets)
-                                        Wrap(
-                                          spacing: 6,
-                                          children: prayer.presets.map((preset) {
-                                            final isSelected = value == preset;
-                                            return InkWell(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              onTap: () =>
-                                                  cubit.updateLocalMinutes(
-                                                prayer.name,
-                                                preset,
-                                              ),
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 10,
-                                                  vertical: 5,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: isSelected
-                                                      ? AdminTheme
-                                                          .primaryEmerald
-                                                      : AdminTheme.surfaceBg,
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: Text(
-                                                  '$preset د',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: isSelected
-                                                        ? Colors.white
-                                                        : AdminTheme
-                                                            .textSecondary,
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          }).toList(),
-                                        ),
-                                        const SizedBox(width: 12),
+                                        const SizedBox(width: 8),
                                         Container(
                                           constraints: const BoxConstraints(
                                             minWidth: 78,
@@ -293,7 +258,47 @@ class IqamaScreen extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 10),
+                                    const SizedBox(height: 12),
+                                    // الصف الثاني: أزرار الاختيار السريع (Presets)
+                                    Wrap(
+                                      spacing: 8,
+                                      runSpacing: 6,
+                                      children: prayer.presets.map((preset) {
+                                        final isSelected = value == preset;
+                                        return InkWell(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          onTap: () => cubit.updateLocalMinutes(
+                                            prayer.name,
+                                            preset,
+                                          ),
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 12,
+                                              vertical: 6,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: isSelected
+                                                  ? AdminTheme.primaryEmerald
+                                                  : AdminTheme.surfaceBg,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              '$preset د',
+                                              style: TextStyle(
+                                                fontSize: 12.5,
+                                                fontWeight: FontWeight.w700,
+                                                color: isSelected
+                                                    ? Colors.white
+                                                    : AdminTheme.textSecondary,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                    const SizedBox(height: 8),
                                     Row(
                                       children: [
                                         IconButton.filledTonal(

@@ -186,10 +186,15 @@ class _TickerScreenState extends State<TickerScreen>
                 Icon(
                   Icons.tune_rounded,
                   color: AdminTheme.primaryEmerald,
-                  size: 24,
+                  size: 22,
                 ),
-                SizedBox(width: 10),
-                Text('الشريط السفلي والتقويم الهجري'),
+                SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    'الشريط والتقويم الهجري',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
             bottom: PreferredSize(
@@ -209,17 +214,20 @@ class _TickerScreenState extends State<TickerScreen>
                   indicatorWeight: 3,
                   labelStyle: const TextStyle(
                     fontWeight: FontWeight.w800,
-                    fontSize: 14,
+                    fontSize: 13.5,
                   ),
                   tabs: [
                     Tab(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.campaign_outlined, size: 20),
-                          const SizedBox(width: 8),
-                          Text(
-                            'رسائل الشريط (${activeTickerItems.length}/${state.items.length})',
+                          const Icon(Icons.campaign_outlined, size: 18),
+                          const SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              'رسائل الشريط (${activeTickerItems.length}/${state.items.length})',
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ],
                       ),
@@ -228,9 +236,14 @@ class _TickerScreenState extends State<TickerScreen>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.calendar_month_rounded, size: 20),
-                          SizedBox(width: 8),
-                          Text('ضبط التاريخ الهجري'),
+                          Icon(Icons.calendar_month_rounded, size: 18),
+                          SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              'التاريخ الهجري',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -300,17 +313,19 @@ class _TickerScreenState extends State<TickerScreen>
                                     size: 16,
                                   ),
                                   const SizedBox(width: 6),
-                                  const Text(
-                                    'معاينة الشريط النشط على الشاشة:',
-                                    style: TextStyle(
-                                      color: AdminTheme.softGold,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                  const Expanded(
+                                    child: Text(
+                                      'معاينة الشريط النشط على الشاشة:',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: AdminTheme.softGold,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
-                                  const Spacer(),
                                   Text(
-                                    '${activeTickerItems.length} رسالة مفعّلة',
+                                    '${activeTickerItems.length} مفعّلة',
                                     style: const TextStyle(
                                       color: Colors.white70,
                                       fontSize: 12,
@@ -392,72 +407,77 @@ class _TickerScreenState extends State<TickerScreen>
                                           const EdgeInsets.only(bottom: 10),
                                       child: Card(
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 14,
-                                            vertical: 12,
-                                          ),
-                                          child: Row(
+                                          padding: const EdgeInsets.all(14),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
                                             children: [
-                                              ReorderableDragStartListener(
-                                                index: index,
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                    color: AdminTheme.surfaceBg,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      8,
+                                              // الصف الأول: مقبض السحب + الرقم + نص الرسالة بعرض الكارت بالكامل
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  ReorderableDragStartListener(
+                                                    index: index,
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                        6,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        color: AdminTheme
+                                                            .surfaceBg,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      child: const Icon(
+                                                        Icons
+                                                            .drag_indicator_rounded,
+                                                        color: AdminTheme
+                                                            .textSecondary,
+                                                        size: 18,
+                                                      ),
                                                     ),
                                                   ),
-                                                  child: const Icon(
-                                                    Icons
-                                                        .drag_indicator_rounded,
-                                                    color: AdminTheme
-                                                        .textSecondary,
-                                                    size: 20,
+                                                  const SizedBox(width: 10),
+                                                  Container(
+                                                    width: 34,
+                                                    height: 34,
+                                                    alignment: Alignment.center,
+                                                    decoration: BoxDecoration(
+                                                      color: isActive
+                                                          ? AdminTheme
+                                                              .softEmerald
+                                                          : Colors
+                                                              .grey.shade100,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        9,
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                      '${index + 1}',
+                                                      style: TextStyle(
+                                                        color: isActive
+                                                            ? AdminTheme
+                                                                .primaryEmerald
+                                                            : Colors.grey,
+                                                        fontWeight:
+                                                            FontWeight.w800,
+                                                        fontSize: 13,
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 14),
-                                              Container(
-                                                width: 36,
-                                                height: 36,
-                                                alignment: Alignment.center,
-                                                decoration: BoxDecoration(
-                                                  color: isActive
-                                                      ? AdminTheme.softEmerald
-                                                      : Colors.grey.shade100,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: Text(
-                                                  '${index + 1}',
-                                                  style: TextStyle(
-                                                    color: isActive
-                                                        ? AdminTheme
-                                                            .primaryEmerald
-                                                        : Colors.grey,
-                                                    fontWeight: FontWeight.w800,
-                                                    fontSize: 13,
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 12),
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
+                                                  const SizedBox(width: 12),
+                                                  Expanded(
+                                                    child: Text(
                                                       item.text,
                                                       textDirection:
                                                           TextDirection.rtl,
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
                                                       style: TextStyle(
-                                                        fontSize: 15,
+                                                        fontSize: 15.5,
+                                                        height: 1.45,
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         color: isActive
@@ -466,62 +486,96 @@ class _TickerScreenState extends State<TickerScreen>
                                                             : Colors.grey,
                                                       ),
                                                     ),
-                                                    const SizedBox(height: 4),
-                                                    Text(
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10),
+                                              const Divider(
+                                                height: 1,
+                                                color: AdminTheme.cardBorder,
+                                              ),
+                                              const SizedBox(height: 6),
+                                              // الصف الثاني: حالة العرض + التفعيل + التعديل + الحذف
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 4,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color: isActive
+                                                          ? AdminTheme
+                                                              .softEmerald
+                                                          : Colors
+                                                              .grey.shade100,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        20,
+                                                      ),
+                                                    ),
+                                                    child: Text(
                                                       isActive
-                                                          ? 'تُعرض حالياً في الشريط السفلي'
-                                                          : 'مخفية مؤقتاً من العرض',
+                                                          ? 'تُعرض في الشريط السفلي'
+                                                          : 'مخفية مؤقتاً',
                                                       style: TextStyle(
                                                         fontSize: 11.5,
                                                         fontWeight:
-                                                            FontWeight.w600,
+                                                            FontWeight.w700,
                                                         color: isActive
                                                             ? AdminTheme
                                                                 .primaryEmerald
                                                             : Colors.grey,
                                                       ),
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                  const Spacer(),
+                                                  IconButton(
+                                                    visualDensity:
+                                                        VisualDensity.compact,
+                                                    tooltip: 'تعديل النص',
+                                                    icon: const Icon(
+                                                      Icons.edit_outlined,
+                                                      color: AdminTheme
+                                                          .textSecondary,
+                                                      size: 20,
+                                                    ),
+                                                    onPressed: () =>
+                                                        _showAddOrEditDialog(
+                                                      context,
+                                                      item: item,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 4),
+                                                  IconButton(
+                                                    visualDensity:
+                                                        VisualDensity.compact,
+                                                    tooltip: 'حذف الرسالة',
+                                                    icon: Icon(
+                                                      Icons
+                                                          .delete_outline_rounded,
+                                                      color:
+                                                          Colors.red.shade600,
+                                                      size: 20,
+                                                    ),
+                                                    onPressed: () =>
+                                                        _confirmDelete(
+                                                      context,
+                                                      item,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 6),
+                                                  Switch(
+                                                    value: isActive,
+                                                    onChanged: (v) =>
+                                                        cubit.toggleActive(
+                                                      item.id,
+                                                      v,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              const SizedBox(width: 12),
-                                              Switch(
-                                                value: isActive,
-                                                onChanged: (v) =>
-                                                    cubit.toggleActive(
-                                                  item.id,
-                                                  v,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 8),
-                                              IconButton(
-                                                tooltip: 'تعديل النص',
-                                                icon: const Icon(
-                                                  Icons.edit_outlined,
-                                                  color:
-                                                      AdminTheme.textSecondary,
-                                                  size: 20,
-                                                ),
-                                                onPressed: () =>
-                                                    _showAddOrEditDialog(
-                                                  context,
-                                                  item: item,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 6),
-                                              IconButton(
-                                                tooltip: 'حذف الرسالة',
-                                                icon: Icon(
-                                                  Icons.delete_outline_rounded,
-                                                  color: Colors.red.shade600,
-                                                  size: 20,
-                                                ),
-                                                onPressed: () => _confirmDelete(
-                                                  context,
-                                                  item,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 4),
                                             ],
                                           ),
                                         ),
