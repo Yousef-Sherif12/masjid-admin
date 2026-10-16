@@ -99,4 +99,45 @@ class AdminTickerRepositoryImpl implements AdminTickerRepository {
 
     await batch.commit();
   }
+
+  @override
+  Stream<double> listenToDateFontSize() {
+    return _db
+        .collection('settings')
+        .doc('display_settings')
+        .snapshots()
+        .map((doc) {
+      final size = doc.data()?['date_font_size'];
+      if (size is num) return size.toDouble();
+      return 15.0;
+    });
+  }
+
+  @override
+  Future<void> updateDateFontSize(double newSize) async {
+    await _db.collection('settings').doc('display_settings').set(
+      {'date_font_size': newSize},
+      SetOptions(merge: true),
+    );
+  }
+
+  @override
+  Stream<String> listenToContentFontFamily() {
+    return _db
+        .collection('settings')
+        .doc('display_settings')
+        .snapshots()
+        .map((doc) {
+      final font = doc.data()?['content_font_family']?.toString() ?? 'Roboto';
+      return (font == 'Tajawal' || font == 'Roboto') ? font : 'Roboto';
+    });
+  }
+
+  @override
+  Future<void> updateContentFontFamily(String newFamily) async {
+    await _db.collection('settings').doc('display_settings').set(
+      {'content_font_family': newFamily},
+      SetOptions(merge: true),
+    );
+  }
 }

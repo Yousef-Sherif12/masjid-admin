@@ -8,4 +8,8 @@ abstract class AdminTickerRepository {
   Future<void> reorderTickerMessages(List<AdminTickerItem> items);
   Stream<int> listenToHijriOffset();
   Future<void> updateHijriOffset(int newOffset);
+  Stream<double> listenToDateFontSize();
+  Future<void> updateDateFontSize(double newSize);
+  Stream<String> listenToContentFontFamily();
+  Future<void> updateContentFontFamily(String newFamily);
 }

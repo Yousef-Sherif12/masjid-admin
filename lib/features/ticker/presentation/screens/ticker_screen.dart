@@ -236,11 +236,11 @@ class _TickerScreenState extends State<TickerScreen>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.calendar_month_rounded, size: 18),
+                          Icon(Icons.tune_rounded, size: 18),
                           SizedBox(width: 6),
                           Flexible(
                             child: Text(
-                              'التاريخ الهجري',
+                              'العرض والخطوط',
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -588,89 +588,495 @@ class _TickerScreenState extends State<TickerScreen>
                     ),
 
               // -------------------------------------------------------------
-              // التبويب الثاني: تعديل الفارق الهجري
+              // التبويب الثاني: إعدادات العرض والخطوط
               // -------------------------------------------------------------
               SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                 child: Center(
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 540),
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(28),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 64,
-                              height: 64,
-                              decoration: BoxDecoration(
-                                color: AdminTheme.softEmerald,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: const Icon(
-                                Icons.nights_stay_rounded,
-                                color: AdminTheme.primaryEmerald,
-                                size: 32,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            const Text(
-                              'ضبط التاريخ الهجري حسب الرؤية الشرعية',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800,
-                                color: AdminTheme.textPrimary,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            const Text(
-                              'يمكنك تقديم أو تأخير التاريخ الهجري المعروض على شاشة المسجد بمقدار يوم أو يومين عند اختلاف ثبوت الهلال، ويتم التحديث على الشاشة لحظياً.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: AdminTheme.textSecondary,
-                                fontSize: 13.5,
-                                height: 1.5,
-                              ),
-                            ),
-                            const SizedBox(height: 28),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                    constraints: const BoxConstraints(maxWidth: 620),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // البطاقة الأولى: نوع خط الآيات والأحاديث
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(22),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                IconButton.filledTonal(
-                                  style: IconButton.styleFrom(
-                                    backgroundColor: Colors.red.shade50,
-                                    foregroundColor: Colors.red.shade700,
-                                    minimumSize: const Size(48, 48),
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: AdminTheme.softEmerald,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: const Icon(
+                                        Icons.font_download_rounded,
+                                        color: AdminTheme.primaryEmerald,
+                                        size: 22,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    const Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'نوع خط الآيات والأحاديث',
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w800,
+                                              color: AdminTheme.textPrimary,
+                                            ),
+                                          ),
+                                          SizedBox(height: 2),
+                                          Text(
+                                            'اختر نوع الخط المفضل، ويتم التبديل على الشاشة فوراً',
+                                            style: TextStyle(
+                                              fontSize: 12.5,
+                                              color: AdminTheme.textSecondary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 18),
+                                Row(
+                                  children: [
+                                    // خيار روبوتو
+                                    Expanded(
+                                      child: InkWell(
+                                        onTap: () => cubit.updateContentFontFamily('Roboto'),
+                                        borderRadius: BorderRadius.circular(14),
+                                        child: AnimatedContainer(
+                                          duration: const Duration(milliseconds: 200),
+                                          padding: const EdgeInsets.all(14),
+                                          decoration: BoxDecoration(
+                                            color: state.contentFontFamily == 'Roboto'
+                                                ? AdminTheme.softEmerald
+                                                : AdminTheme.surfaceBg,
+                                            borderRadius: BorderRadius.circular(14),
+                                            border: Border.all(
+                                              color: state.contentFontFamily == 'Roboto'
+                                                  ? AdminTheme.primaryEmerald
+                                                  : AdminTheme.cardBorder,
+                                              width: state.contentFontFamily == 'Roboto' ? 2 : 1,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    state.contentFontFamily == 'Roboto'
+                                                        ? Icons.radio_button_checked_rounded
+                                                        : Icons.radio_button_off_rounded,
+                                                    color: state.contentFontFamily == 'Roboto'
+                                                        ? AdminTheme.primaryEmerald
+                                                        : Colors.grey,
+                                                    size: 20,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  const Text(
+                                                    'روبوتو (Roboto)',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w800,
+                                                      fontSize: 14.5,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 6),
+                                              const Text(
+                                                'النسخ الكلاسيكي المريح - ممتاز للتشكيل والآيات الطويلة',
+                                                style: TextStyle(
+                                                  fontSize: 11.5,
+                                                  color: AdminTheme.textSecondary,
+                                                  height: 1.4,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    // خيار تجوال
+                                    Expanded(
+                                      child: InkWell(
+                                        onTap: () => cubit.updateContentFontFamily('Tajawal'),
+                                        borderRadius: BorderRadius.circular(14),
+                                        child: AnimatedContainer(
+                                          duration: const Duration(milliseconds: 200),
+                                          padding: const EdgeInsets.all(14),
+                                          decoration: BoxDecoration(
+                                            color: state.contentFontFamily == 'Tajawal'
+                                                ? AdminTheme.softEmerald
+                                                : AdminTheme.surfaceBg,
+                                            borderRadius: BorderRadius.circular(14),
+                                            border: Border.all(
+                                              color: state.contentFontFamily == 'Tajawal'
+                                                  ? AdminTheme.primaryEmerald
+                                                  : AdminTheme.cardBorder,
+                                              width: state.contentFontFamily == 'Tajawal' ? 2 : 1,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    state.contentFontFamily == 'Tajawal'
+                                                        ? Icons.radio_button_checked_rounded
+                                                        : Icons.radio_button_off_rounded,
+                                                    color: state.contentFontFamily == 'Tajawal'
+                                                        ? AdminTheme.primaryEmerald
+                                                        : Colors.grey,
+                                                    size: 20,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  const Text(
+                                                    'تجوال (Tajawal)',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w800,
+                                                      fontSize: 14.5,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 6),
+                                              const Text(
+                                                'الخط العصري الأنيق - تصميم هندسي واضح وحديث',
+                                                style: TextStyle(
+                                                  fontSize: 11.5,
+                                                  color: AdminTheme.textSecondary,
+                                                  height: 1.4,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 14),
+                                // عينة معاينة حية للخط
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withValues(alpha: 0.04),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: AdminTheme.cardBorder),
                                   ),
-                                  onPressed: offset > -3
-                                      ? () =>
-                                          cubit.updateHijriOffset(offset - 1)
-                                      : null,
-                                  icon: const Icon(
-                                    Icons.remove_rounded,
-                                    size: 24,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'معاينة الخط المحدد (${state.contentFontFamily}):',
+                                        style: const TextStyle(
+                                          fontSize: 11.5,
+                                          fontWeight: FontWeight.w700,
+                                          color: AdminTheme.textSecondary,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Center(
+                                        child: Text(
+                                          '﴿فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ۝﴾',
+                                          textAlign: TextAlign.center,
+                                          textDirection: TextDirection.rtl,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: state.contentFontFamily == 'Tajawal'
+                                                ? 'Tajawal'
+                                                : null,
+                                            color: AdminTheme.primaryEmerald,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                const SizedBox(width: 12),
-                                Flexible(
-                                  child: ConstrainedBox(
-                                    constraints: const BoxConstraints(
-                                      maxWidth: 160,
-                                      minWidth: 110,
-                                    ),
-                                    child: Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 16,
-                                        horizontal: 12,
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+
+                        // البطاقة الثانية: حجم خط التاريخ الميلادي والهجري
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(22),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: AdminTheme.softEmerald,
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
+                                      child: const Icon(
+                                        Icons.format_size_rounded,
+                                        color: AdminTheme.primaryEmerald,
+                                        size: 22,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    const Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'حجم خط التاريخ (الميلادي والهجري)',
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w800,
+                                              color: AdminTheme.textPrimary,
+                                            ),
+                                          ),
+                                          SizedBox(height: 2),
+                                          Text(
+                                            'تحكم في حجم خط التاريخ لمنع نزوله لسطر ثانٍ عند طول اسم الشهر',
+                                            style: TextStyle(
+                                              fontSize: 12.5,
+                                              color: AdminTheme.textSecondary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                // التحكم بالزيادة والنقصان
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton.filledTonal(
+                                      style: IconButton.styleFrom(
+                                        backgroundColor: Colors.red.shade50,
+                                        foregroundColor: Colors.red.shade700,
+                                        minimumSize: const Size(46, 46),
+                                      ),
+                                      onPressed: state.dateFontSize > 11
+                                          ? () => cubit.updateDateFontSize(state.dateFontSize - 1)
+                                          : null,
+                                      icon: const Icon(Icons.remove_rounded, size: 22),
+                                      tooltip: 'تصغير خط التاريخ',
+                                    ),
+                                    const SizedBox(width: 14),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                                      decoration: BoxDecoration(
+                                        color: AdminTheme.softEmerald,
+                                        borderRadius: BorderRadius.circular(14),
+                                        border: Border.all(
+                                          color: AdminTheme.primaryEmerald,
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            '${state.dateFontSize.toInt()} pt',
+                                            style: const TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w900,
+                                              color: AdminTheme.primaryEmerald,
+                                            ),
+                                          ),
+                                          const Text(
+                                            'حجم الخط الحالي',
+                                            style: TextStyle(
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w600,
+                                              color: AdminTheme.textSecondary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 14),
+                                    IconButton.filledTonal(
+                                      style: IconButton.styleFrom(
+                                        backgroundColor: AdminTheme.softEmerald,
+                                        foregroundColor: AdminTheme.primaryEmerald,
+                                        minimumSize: const Size(46, 46),
+                                      ),
+                                      onPressed: state.dateFontSize < 22
+                                          ? () => cubit.updateDateFontSize(state.dateFontSize + 1)
+                                          : null,
+                                      icon: const Icon(Icons.add_rounded, size: 22),
+                                      tooltip: 'تكبير خط التاريخ',
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                // أزرار اختصارات سريعة
+                                Center(
+                                  child: Wrap(
+                                    spacing: 8,
+                                    runSpacing: 8,
+                                    alignment: WrapAlignment.center,
+                                    children: [
+                                      (size: 13.0, label: 'صغير 13'),
+                                      (size: 14.0, label: 'متوسط 14'),
+                                      (size: 15.0, label: 'افتراضي 15'),
+                                      (size: 17.0, label: 'كبير 17'),
+                                      (size: 19.0, label: 'كبير جداً 19'),
+                                    ].map((preset) {
+                                      final isSelected = state.dateFontSize.toInt() == preset.size.toInt();
+                                      return ChoiceChip(
+                                        label: Text(preset.label),
+                                        selected: isSelected,
+                                        selectedColor: AdminTheme.softEmerald,
+                                        labelStyle: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12,
+                                          color: isSelected
+                                              ? AdminTheme.primaryEmerald
+                                              : AdminTheme.textSecondary,
+                                        ),
+                                        onSelected: (_) => cubit.updateDateFontSize(preset.size),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                // محاكاة حية للتاريخ في عمود المواقيت
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withValues(alpha: 0.04),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: AdminTheme.cardBorder),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'معاينة التاريخ (كما يظهر على الشاشة بسطر واحد دائماً):',
+                                        style: TextStyle(
+                                          fontSize: 11.5,
+                                          fontWeight: FontWeight.w700,
+                                          color: AdminTheme.textSecondary,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        'الأربعاء 4 ربيع الثاني 1448هـ',
+                                        maxLines: 1,
+                                        textDirection: TextDirection.rtl,
+                                        style: TextStyle(
+                                          fontSize: state.dateFontSize,
+                                          fontWeight: FontWeight.w700,
+                                          color: AdminTheme.textPrimary,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        '15 أكتوبر 2026م',
+                                        maxLines: 1,
+                                        textDirection: TextDirection.rtl,
+                                        style: TextStyle(
+                                          fontSize: state.dateFontSize,
+                                          fontWeight: FontWeight.w700,
+                                          color: AdminTheme.textPrimary,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+
+                        // البطاقة الثالثة: ضبط التاريخ الهجري حسب الرؤية الشرعية
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(22),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: AdminTheme.softEmerald,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: const Icon(
+                                        Icons.nights_stay_rounded,
+                                        color: AdminTheme.primaryEmerald,
+                                        size: 22,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    const Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'ضبط التاريخ الهجري (الرؤية الشرعية)',
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w800,
+                                              color: AdminTheme.textPrimary,
+                                            ),
+                                          ),
+                                          SizedBox(height: 2),
+                                          Text(
+                                            'تقديم أو تأخير اليوم بمقدار يوم أو يومين عند ثبوت الهلال',
+                                            style: TextStyle(
+                                              fontSize: 12.5,
+                                              color: AdminTheme.textSecondary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton.filledTonal(
+                                      style: IconButton.styleFrom(
+                                        backgroundColor: Colors.red.shade50,
+                                        foregroundColor: Colors.red.shade700,
+                                        minimumSize: const Size(46, 46),
+                                      ),
+                                      onPressed: offset > -3
+                                          ? () => cubit.updateHijriOffset(offset - 1)
+                                          : null,
+                                      icon: const Icon(Icons.remove_rounded, size: 22),
+                                    ),
+                                    const SizedBox(width: 14),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                       decoration: BoxDecoration(
                                         color: offset == 0
                                             ? AdminTheme.surfaceBg
                                             : AdminTheme.softEmerald,
-                                        borderRadius: BorderRadius.circular(16),
+                                        borderRadius: BorderRadius.circular(14),
                                         border: Border.all(
                                           color: offset == 0
                                               ? AdminTheme.cardBorder
@@ -683,10 +1089,7 @@ class _TickerScreenState extends State<TickerScreen>
                                           Text(
                                             offset > 0
                                                 ? '+$offset يوم'
-                                                : (offset < 0
-                                                    ? '$offset يوم'
-                                                    : 'تلقائي (0)'),
-                                            textAlign: TextAlign.center,
+                                                : (offset < 0 ? '$offset يوم' : 'تلقائي (0)'),
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.w900,
@@ -695,16 +1098,14 @@ class _TickerScreenState extends State<TickerScreen>
                                                   : AdminTheme.primaryEmerald,
                                             ),
                                           ),
-                                          const SizedBox(height: 4),
                                           Text(
                                             offset == 0
                                                 ? 'التقويم الافتراضي'
                                                 : (offset > 0
                                                     ? 'تقديم التاريخ الهجري'
                                                     : 'تأخير التاريخ الهجري'),
-                                            textAlign: TextAlign.center,
                                             style: const TextStyle(
-                                              fontSize: 12,
+                                              fontSize: 11,
                                               color: AdminTheme.textSecondary,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -712,62 +1113,62 @@ class _TickerScreenState extends State<TickerScreen>
                                         ],
                                       ),
                                     ),
+                                    const SizedBox(width: 14),
+                                    IconButton.filledTonal(
+                                      style: IconButton.styleFrom(
+                                        backgroundColor: AdminTheme.softEmerald,
+                                        foregroundColor: AdminTheme.primaryEmerald,
+                                        minimumSize: const Size(46, 46),
+                                      ),
+                                      onPressed: offset < 3
+                                          ? () => cubit.updateHijriOffset(offset + 1)
+                                          : null,
+                                      icon: const Icon(Icons.add_rounded, size: 22),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                Center(
+                                  child: Wrap(
+                                    spacing: 8,
+                                    runSpacing: 8,
+                                    alignment: WrapAlignment.center,
+                                    children: [-2, -1, 0, 1, 2].map((preset) {
+                                      final isSelected = offset == preset;
+                                      final label = preset == 0
+                                          ? 'تلقائي (0)'
+                                          : (preset > 0 ? '+$preset يوم' : '$preset يوم');
+                                      return ChoiceChip(
+                                        label: Text(label),
+                                        selected: isSelected,
+                                        selectedColor: AdminTheme.softEmerald,
+                                        labelStyle: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12,
+                                          color: isSelected
+                                              ? AdminTheme.primaryEmerald
+                                              : AdminTheme.textSecondary,
+                                        ),
+                                        onSelected: (_) => cubit.updateHijriOffset(preset),
+                                      );
+                                    }).toList(),
                                   ),
                                 ),
-                                const SizedBox(width: 12),
-                                IconButton.filledTonal(
-                                  style: IconButton.styleFrom(
-                                    backgroundColor: AdminTheme.softEmerald,
-                                    foregroundColor: AdminTheme.primaryEmerald,
-                                    minimumSize: const Size(48, 48),
+                                if (offset != 0) ...[
+                                  const SizedBox(height: 14),
+                                  Center(
+                                    child: TextButton.icon(
+                                      onPressed: () => cubit.updateHijriOffset(0),
+                                      icon: const Icon(Icons.restart_alt_rounded, size: 18),
+                                      label: const Text('إعادة الضبط للتاريخ الافتراضي'),
+                                    ),
                                   ),
-                                  onPressed: offset < 3
-                                      ? () =>
-                                          cubit.updateHijriOffset(offset + 1)
-                                      : null,
-                                  icon: const Icon(Icons.add_rounded, size: 24),
-                                ),
+                                ],
                               ],
                             ),
-                            const SizedBox(height: 24),
-                            // أزرار سريعة لاختيار الفارق
-                            Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
-                              alignment: WrapAlignment.center,
-                              children: [-2, -1, 0, 1, 2].map((preset) {
-                                final isSelected = offset == preset;
-                                final label = preset == 0
-                                    ? 'تلقائي (0)'
-                                    : (preset > 0 ? '+$preset يوم' : '$preset يوم');
-                                return ChoiceChip(
-                                  label: Text(label),
-                                  selected: isSelected,
-                                  selectedColor: AdminTheme.softEmerald,
-                                  labelStyle: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: isSelected
-                                        ? AdminTheme.primaryEmerald
-                                        : AdminTheme.textSecondary,
-                                  ),
-                                  onSelected: (_) =>
-                                      cubit.updateHijriOffset(preset),
-                                );
-                              }).toList(),
-                            ),
-                            if (offset != 0) ...[
-                              const SizedBox(height: 18),
-                              TextButton.icon(
-                                onPressed: () => cubit.updateHijriOffset(0),
-                                icon: const Icon(Icons.restart_alt_rounded),
-                                label: const Text(
-                                  'إعادة الضبط إلى التاريخ الهجري الافتراضي',
-                                ),
-                              ),
-                            ],
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),

@@ -223,6 +223,25 @@ class FakeAdminTickerRepository implements AdminTickerRepository {
   Future<void> updateHijriOffset(int newOffset) async {
     hijriOffset = newOffset;
   }
+
+  double dateFontSize = 15.0;
+  String contentFontFamily = 'Roboto';
+
+  @override
+  Stream<double> listenToDateFontSize() => Stream.value(dateFontSize);
+
+  @override
+  Future<void> updateDateFontSize(double newSize) async {
+    dateFontSize = newSize;
+  }
+
+  @override
+  Stream<String> listenToContentFontFamily() => Stream.value(contentFontFamily);
+
+  @override
+  Future<void> updateContentFontFamily(String newFamily) async {
+    contentFontFamily = newFamily;
+  }
 }
 
 void main() {

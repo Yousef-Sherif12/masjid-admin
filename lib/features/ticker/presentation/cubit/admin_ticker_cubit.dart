@@ -7,6 +7,8 @@ import 'package:masjid_admin/features/ticker/presentation/cubit/admin_ticker_sta
 class AdminTickerCubit extends Cubit<AdminTickerState> {
   final AdminTickerRepository _repository;
   StreamSubscription<int>? _hijriSubscription;
+  StreamSubscription<double>? _dateFontSizeSubscription;
+  StreamSubscription<String>? _fontFamilySubscription;
 
   AdminTickerCubit(this._repository) : super(const AdminTickerState());
 
@@ -17,6 +19,23 @@ class AdminTickerCubit extends Cubit<AdminTickerState> {
         emit(state.copyWith(hijriOffset: offset));
       }
     });
+
+    _dateFontSizeSubscription?.cancel();
+    _dateFontSizeSubscription =
+        _repository.listenToDateFontSize().listen((size) {
+      if (!isClosed) {
+        emit(state.copyWith(dateFontSize: size));
+      }
+    });
+
+    _fontFamilySubscription?.cancel();
+    _fontFamilySubscription =
+        _repository.listenToContentFontFamily().listen((font) {
+      if (!isClosed) {
+        emit(state.copyWith(contentFontFamily: font));
+      }
+    });
+
     await loadTickerMessages();
   }
 
@@ -109,9 +128,31 @@ class AdminTickerCubit extends Cubit<AdminTickerState> {
     }
   }
 
+  Future<void> updateDateFontSize(double newSize) async {
+    try {
+      await _repository.updateDateFontSize(newSize);
+    } catch (e) {
+      if (!isClosed) {
+        emit(state.copyWith(errorMessage: 'فشل تحديث حجم خط التاريخ: $e'));
+      }
+    }
+  }
+
+  Future<void> updateContentFontFamily(String newFamily) async {
+    try {
+      await _repository.updateContentFontFamily(newFamily);
+    } catch (e) {
+      if (!isClosed) {
+        emit(state.copyWith(errorMessage: 'فشل تغيير نوع الخط: $e'));
+      }
+    }
+  }
+
   @override
   Future<void> close() {
     _hijriSubscription?.cancel();
+    _dateFontSizeSubscription?.cancel();
+    _fontFamilySubscription?.cancel();
     return super.close();
   }
 }
